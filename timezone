@@ -1,0 +1,31 @@
+# Load the necessary library
+library(lubridate)
+
+convert_timezone <- function(datetime, from_tz, to_tz) {
+  """
+  This function takes a datetime object and converts it from one timezone to another.
+  
+  Parameters:
+  datetime (POSIXct): The datetime object to be converted
+  from_tz (character): The timezone to convert from
+  to_tz (character): The timezone to convert to
+  
+  Returns:
+  POSIXct: The datetime object converted to the new timezone
+  """
+  
+  tryCatch({
+    # Convert the datetime object to the specified timezone
+    new_datetime <- with_tz(datetime, from_tz)
+    
+    # Convert the datetime object to the new timezone
+    new_datetime <- force_tz(new_datetime, to_tz)
+    
+    # Return the converted datetime object
+    return(new_datetime)
+  }, error = function(e) {
+    # Log the error
+    cat("Error: ", e$message, "\n")
+    return(NULL)
+  })
+}
